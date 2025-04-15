@@ -86,7 +86,7 @@ with col1:
 
 with col2:
     st.subheader(" Top 10 Features Used")
-    st.write(pd.DataFrame({"Feature": top_10_features}).style.hide_index())
+    st.write(pd.DataFrame({"Feature": top_10_features}))
 
 
 st.markdown("---")
