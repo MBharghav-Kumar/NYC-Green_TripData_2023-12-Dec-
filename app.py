@@ -15,7 +15,7 @@ st.markdown("Use **Multiple Linear Regression** to estimate taxi fare (`total_am
 
 @st.cache_data
 def load_data():
-    df = pd.read_parquet(r"c:\Users\ASUS\Downloads\bharghav\green_tripdata_2023-12.parquet")
+    df = pd.read_parquet(r"green_tripdata_2023-12.parquet")
     df["trip_duration"] = (df["lpep_dropoff_datetime"] - df["lpep_pickup_datetime"]).dt.total_seconds() / 60
     df.fillna(df.median(numeric_only=True), inplace=True)
     df.fillna("Unknown", inplace=True)
