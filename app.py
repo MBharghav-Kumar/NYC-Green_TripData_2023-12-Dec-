@@ -18,7 +18,13 @@ def load_data():
     df = pd.read_parquet(r"green_tripdata_2023-12.parquet")
     df["trip_duration"] = (df["lpep_dropoff_datetime"] - df["lpep_pickup_datetime"]).dt.total_seconds() / 60
     df.fillna(df.median(numeric_only=True), inplace=True)
-    df.fillna("Unknown", inplace=True)
+    # Fill numeric columns
+    numeric_cols = df.select_dtypes(include=['number']).columns
+    df[numeric_cols] = df[numeric_cols].fillna(df[numeric_cols].median())
+
+    # Fill categorical columns
+    categorical_cols = df.select_dtypes(include=['object']).columns
+    df[categorical_cols] = df[categorical_cols].fillna("Unknown")
     df["weekday"] = df["lpep_dropoff_datetime"].dt.day_name()
     df["hourofday"] = df["lpep_dropoff_datetime"].dt.hour
     df = df[df['total_amount'] >= 0]
